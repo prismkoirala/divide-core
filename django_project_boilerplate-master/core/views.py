@@ -10,6 +10,9 @@ from django.views.generic import ListView, DetailView, View
 
 # Create your views here.
 
+def about(request):
+    return render(request, "about.html")
+
 class HomeView(ListView):
     model = Item
     paginate_by = 4
