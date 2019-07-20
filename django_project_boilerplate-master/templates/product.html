@@ -74,6 +74,7 @@
               </a>
             </form>
             {% endcomment %}
+            {% csrf_token %}
             <a href="{{ object.get_add_to_cart_for_product_url }}" class="btn blue-gradient btn-md my-0 p">Add to cart
               <i class="fas fa-shopping-cart ml-1"></i>
             </a>

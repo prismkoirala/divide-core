@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
+from django import forms
 # Create your models here.
 
 CATEGORY_CHOICES = (
@@ -19,6 +20,13 @@ LABEL_NAME_CHOICES = (
     ('New','New'),
     ('Prime','Prime'),
     ('Out Of Stock','Out Of Stock'),
+)
+
+ITEM_SIZE = (
+    ('S','Small'),
+    ('M','Medium'),
+    ('L','Large'),
+    ('XL','Extra Large')
 )
 
 class Item(models.Model):
@@ -73,7 +81,7 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-
+    size = models.CharField(choices = ITEM_SIZE, max_length=2)
 
     def __str__(self):
         return f" {self.quantity} of {self.item.title}"
@@ -94,9 +102,6 @@ class OrderItem(models.Model):
 
     def total_before_discount(self):
         return self.get_total_item_price()
-
-
-
 
 
 class Order(models.Model):

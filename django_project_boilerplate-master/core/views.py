@@ -7,6 +7,7 @@ from .models import Item,Order,OrderItem
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
+from .forms import CheckoutForm
 
 # Create your views here.
 class HomeView(ListView):
@@ -26,11 +27,23 @@ class OrderSummaryView(LoginRequiredMixin, View):
             messages.error(self.request, "You do not have active Orders!")
             return redirect("/")
 
-def checkout_page(request):
-    context = {
-        'items' : Item.objects.all()
-    }
-    return render(request, "checkout.html", context)
+class CheckoutView(View):
+    def get(self, *args, **kwargs):
+        form = CheckoutForm()
+        context =  {
+            'form' : form
+        }
+        return render(self.request, "checkout.html", context)
+
+    def post(self, *args, **kwargs):
+        form = CheckoutForm(self.request.POST or None)
+        if form.is_valid():
+            print(form.cleaned_data)
+            print("the form is valid!")
+            messages.success( self.request, "Success Checkout!" )
+            return redirect('core:checkout_page')
+        messages.warning(self.request, "Failed Checkout")
+        return redirect('core:checkout_page')
 
 class ItemDetailView(DetailView):
     model = Item
