@@ -3,11 +3,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
-from .models import Item,Order,OrderItem
+from .models import Item,Order,OrderItem,BillingAddresse
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View
 from .forms import CheckoutForm
+
 
 # Create your views here.
 class HomeView(ListView):
@@ -37,13 +38,36 @@ class CheckoutView(View):
 
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
-        if form.is_valid():
-            print(form.cleaned_data)
-            print("the form is valid!")
-            messages.success( self.request, "Success Checkout!" )
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                street_address = form.cleaned_data.get('street_address')
+                apartment_address = form.cleaned_data.get('apartment_address')
+                state = form.cleaned_data.get('state')
+                zip = form.cleaned_data.get('zip')
+                #TODO: add functionality for these fields
+                #same_shipping_address = form.cleaned_data.get('same_shipping_address')
+                #save_info = form.cleaned_data.get('save_info')
+                #payment_option = form.cleaned_data.get('payment_option')
+                billing_address = BillingAddresse(
+                    user = self.request.user,
+                    street_address = street_address,
+                    apartment_address = apartment_address,
+                    state = state,
+                    zip = zip,
+                )
+                billing_address.save()
+                order.billing_address = billing_address
+                order.save()
+                messages.success( self.request, "Success Checkout!" )
+                return redirect('core:checkout_page')
+            messages.warning(self.request, "Failed Checkout")
             return redirect('core:checkout_page')
-        messages.warning(self.request, "Failed Checkout")
-        return redirect('core:checkout_page')
+        except ObjectDoesNotExist:
+            messages.error(self.request, "You do not have active Orders!")
+            return redirect("core:order-summary")
+
+
 
 class ItemDetailView(DetailView):
     model = Item

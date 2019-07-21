@@ -2,6 +2,14 @@ from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
 from django import forms
+
+STATES =[
+    ('1','STATE 1'),
+    ('2','STATE 2'),
+    ('3','STATE 3'),
+    ('4','STATE 4'),
+    ('5','STATE 5')
+]
 # Create your models here.
 
 CATEGORY_CHOICES = (
@@ -111,6 +119,10 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
+    billing_address = models.ForeignKey('BillingAddresse', on_delete=models.SET_NULL,
+                    blank=True,
+                    null = True
+                    )
 
     def __str__(self):
         return self.user.username
@@ -132,3 +144,14 @@ class Order(models.Model):
         for order_item in self.items.all():
             total += order_item.total_before_discount() - order_item.get_final_price()
         return total
+
+class BillingAddresse(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+            on_delete=models.CASCADE)
+    street_address = models.CharField(max_length=100)
+    apartment_address = models.CharField(max_length=100)
+    state = models.CharField(choices= STATES, max_length = 2)
+    zip = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.user.username

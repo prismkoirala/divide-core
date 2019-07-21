@@ -1,19 +1,21 @@
 from django import forms
 from django_countries.fields import CountryField
 
-
-class CheckoutForm(forms.Form):
-    STATES =[
+STATES =[
     ('1','STATE 1'),
     ('2','STATE 2'),
     ('3','STATE 3'),
     ('4','STATE 4'),
     ('5','STATE 5')
-    ]
-    PAYMENT_CHOICES = [
-        ('S','Stripe'),
-        ('P','Paypal')
-    ]
+]
+
+PAYMENT_CHOICES = [
+    ('S','Stripe'),
+    ('P','Paypal')
+]
+class CheckoutForm(forms.Form):
+
+
     street_address = forms.CharField(
         widget = forms.TextInput(attrs={
             'placeholder' : 'eg. 1234 main road, near abc landmark',
@@ -39,7 +41,7 @@ class CheckoutForm(forms.Form):
         'class' : 'form-control custom-select-lg',
         'id' : 'zip'
     }))
-    same_billing_address = forms.BooleanField(required=False)
+    same_shipping_address = forms.BooleanField(required=False)
     save_info = forms.BooleanField(required=False)
     payment_option = forms.ChoiceField(
         widget = forms.Select(),

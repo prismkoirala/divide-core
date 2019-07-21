@@ -19,11 +19,6 @@
 
           <!--Card-->
           <div class="card">
-            <div class="col-12">
-            <form>
-              <button class='btn btn-primary blue-gradient' type='submit'>CHECKOUT</button>
-              </form>
-              </div>
 
             <!--Card content-->
             <form method="POST" class="card-body">
@@ -78,8 +73,8 @@
               <hr>
 
               <div class="custom-control custom-checkbox">
-                <input {% if form.same_billing_address.value  %} checked {% endif %} type="checkbox" class="custom-control-input" id="same-address" >
-                {{ form.same_billing_address }}
+                <input {% if form.same_shipping_address.value  %} checked {% endif %} type="checkbox" class="custom-control-input" id="same-address" >
+                {{ form.same_shipping_address }}
                 <label class="custom-control-label" for="same-address">Save this information for next time</label>
               </div>
               <div class="custom-control custom-checkbox">
