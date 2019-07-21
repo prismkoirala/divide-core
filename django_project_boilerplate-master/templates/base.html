@@ -56,7 +56,7 @@
     <body>
 
       <!-- Navbar -->
-      <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar blue-gradient">
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark white scrolling-navbar primary-color-dark" style="  border-bottom-left-radius: 50% 20%;border-bottom-right-radius: 50% 20%;">
         <div class="container">
 
           <!-- Brand -->
@@ -73,11 +73,6 @@
 
             <!-- Left -->
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-            <a class="nav-link white-text" href="{% url 'about_page' %}">About
-             <span class="sr-only">(current)</span>
-            </a>
-          </li>
           </ul>
 
 
@@ -88,28 +83,23 @@
               <li class="nav-item">
                 <a class="nav-link waves-effect" href="{% url 'core:order-summary' %}">
                   <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
-                  <i class="fas fa-shopping-cart" style="color:white;"></i>
-                  <span class="clearfix d-none d-sm-inline-block text-white"> Cart </span>
+                  <button class=" btn btn-dark btn-sm  text-white" style="padding:5px;margin:2px;"><i class="fas fa-shopping-cart" style="color:white;"></i> Cart </button>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link waves-effect" href="{% url 'account_logout' %}">
-                  <i class="fa  fa-chevron-circle-left" style="color:white;" aria-hidden="true"></i>
-                  <span class="clearfix d-none d-sm-inline-block text-white"> Logout </span>
+                  <button class=" btn btn-dark btn-sm  text-white" style="padding:5px;margin:2px;"><i class="fas fa-chevron-circle-left" style="color:white;"></i> Logout </button>
                 </a>
               </li>
               {% else %}
               <li class="nav-item">
                 <a class="nav-link waves-effect" href="{% url 'account_login' %}">
-                  <i class="fas fa-user-circle" style="color:white;"></i>
-                  <span class="clearfix d-none d-sm-inline-block text-white"> Login </span>
+                  <button class=" btn btn-dark btn-sm  text-white" style="padding:5px;margin:2px;"><i class="fas fa-user-circle" style="color:white;"></i> Login </button>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link waves-effect" href="{% url 'account_signup' %}">
-                  <i class="fas fa-user-plus " style="color:white;"></i>
-
-                  <span class="clearfix d-none d-sm-inline-block text-white"> Sign up </span>
+                  <button class=" btn btn-dark btn-sm peach-gradient  text-white" style="padding:5px;margin:2px;"><i class="fas fa-user-plus" style="color:white;"></i> Signup </button>
                 </a>
               </li>
               {% endif %}
@@ -133,7 +123,7 @@
 
       {% if messages %}
           {% for message in messages %}
-          <div class="md-5 pt-5" style="margin-top:20px;">
+          <div class="md-2 pt-5" style="margin-top:20px;">
             <div class="alert alert-{{ message.tags }} peach-gradient" role="alert">
               {{ message }}
             </div>
@@ -141,7 +131,7 @@
           {% endfor %}
       {% endif %}
       <!-- Navbar -->
-        <div class="md-5 pt-5" style="margin-top:10px;">
+        <div class="md-2 pt-5" style="margin-top:10px;">
         {% block content  %}
 
 
@@ -150,9 +140,15 @@
 
         {% block extra_body %}
         {% endblock %}
-        <footer class="page-footer text-center font-small mt-4 wow fadeIn blue-gradient">
+        <footer class="page-footer text-center font-small mt-4 wow fadeIn special-color-dark" style="  border-top-left-radius: 75% 45%;border-top-right-radius: 75% 45%;">
+          <hr class="my-4" style="border-color:white;">
 
-          <hr class="my-4">
+
+          <a class="nav-link white-text" href="{% url 'about_page' %}">
+            <button class="btn primary-color-dark" style="position:relative;bottom:60px;">About</button>
+           <span class="sr-only">(current)</span>
+          </a>
+
 
           <!-- Social icons -->
           <div class="pb-4">
