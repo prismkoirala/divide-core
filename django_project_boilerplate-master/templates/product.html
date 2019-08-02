@@ -7,17 +7,35 @@
   <!--Main layout-->
   <main class=" pt-4">
 
-    <div class="container dark-grey-text">
-      <nav class="nav py-1 navbar-dark mdb-color z-depth-1 lighten-3 mt-3 mb-3 aqua-gradient">
-        <div class="text-wrap">
-        <a href="{% url 'core:home' %}" class="badge  ml-2 mr-1 mb-2 mt-2 blue-gradient">
-          <i class="fas fa-home"></i>
-          Home
-        </a> <b class="ml-1 mr-1">/</b>
-        <a href="{% url 'core:order-summary' %}" class="badge badge-primary ml-2 mr-1 mb-2 mt-2 peach-gradient">
-          {{ object.title }}
-        </a>
+    <div class="container ">
+      <nav class="navbar navbar-expand-lg navbar-dark special-color-dark lighten-3 mt-3 mb-5">
+
+        <!-- Navbar brand -->
+        <span class="navbar-brand"><h6 class="mt-2">{{object.title}}:</h6></span>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon" style="color: black;"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+          <!-- Links -->
+          <ul class="navbar-nav mr-auto">
+
+          </ul>
+          <!-- Links -->
+
+          <form class="form-inline">
+            <div class="md-form my-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            </div>
+          </form>
         </div>
+        <!-- Collapsible content -->
+
       </nav>
 
 
@@ -59,13 +77,18 @@
                 </span>
                 <span>Rs.{{object.discount_price}}</span>
               {% else %}
-                Rs. {{ item.price }}
+                Rs. {{ object.price }}
               {% endif %}
             </p>
 
             <p class="lead font-weight-bold">Description</p>
 
             <p>{{ object.description }}</p>
+            <form>
+            (
+            {% csrf_token %}
+            {{form}})
+            </form>
             {% comment%}
             <form class="d-flex justify-content-left">
               <!-- Default input -->
@@ -76,9 +99,14 @@
             </form>
             {% endcomment %}
             {% csrf_token %}
-            <a href="{{ object.get_add_to_cart_for_product_url }}" class="btn blue-gradient btn-md my-0 p">Add to cart
+            <form>
+              {{forms}}
+
+            </form>
+            <form action="{{ object.get_add_to_cart_for_product_url }}">
+            <button class="btn text-white primary-color-dark btn-md my-0 p">Add to cart
               <i class="fas fa-shopping-cart ml-1"></i>
-            </a>
+            </button>
 
 
 
@@ -104,9 +132,7 @@
 
           <h4 class="my-4 h4">Additional information</h4>
 
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit
-            voluptates,
-            quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+          <p>{{object.add_info}}</p>
 
         </div>
         <!--Grid column-->
@@ -120,7 +146,7 @@
         <!--Grid column-->
         <div class="col-lg-4 col-md-12 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+          <img src="{{ object.add_image1.url }}" class="img-fluid" alt="">
 
         </div>
         <!--Grid column-->
@@ -128,7 +154,7 @@
         <!--Grid column-->
         <div class="col-lg-4 col-md-6 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+          <img src="{{ object.add_image1.url }}" class="img-fluid" alt="">
 
         </div>
         <!--Grid column-->
@@ -136,7 +162,7 @@
         <!--Grid column-->
         <div class="col-lg-4 col-md-6 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+          <img src="{{ object.add_image1.url }}" class="img-fluid" alt="">
 
         </div>
         <!--Grid column-->

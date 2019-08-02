@@ -41,7 +41,7 @@ class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.IntegerField()
     discount_price = models.IntegerField(blank=True,null=True)
-    image = models.ImageField(upload_to = 'default/',
+    image = models.ImageField(upload_to = 'product-img/',
         default='default/default-dummy-image.jpg',
         blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES,max_length=2)
@@ -50,6 +50,16 @@ class Item(models.Model):
     slug = models.SlugField()
     description = models.TextField()
     quantity = models.IntegerField(default=1)
+    add_info = models.TextField()
+    add_image1 = models.ImageField(upload_to = 'additional/',
+        default='default/add_default.jpg',
+        blank=True, null=True)
+    add_image2 = models.ImageField(upload_to = 'additional/',
+        default='default/add_default.jpg',
+        blank=True, null=True)
+    add_image3 = models.ImageField(upload_to = 'additional/',
+        default='default/add_default.jpg',
+        blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -89,10 +99,11 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
-    size = models.CharField(choices = ITEM_SIZE, max_length=2)
+    size = models.CharField(blank=True,choices = ITEM_SIZE, max_length=2, default="S",)
+
 
     def __str__(self):
-        return f" {self.quantity} of {self.item.title}"
+        return f"{self.quantity} of {self.item.title}"
 
     def get_total_item_price(self):
         return self.quantity * self.item.price

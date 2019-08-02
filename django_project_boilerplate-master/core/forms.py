@@ -1,5 +1,6 @@
 from django import forms
 from django_countries.fields import CountryField
+from .models import OrderItem
 
 STATES =[
     ('1','STATE 1'),
@@ -12,6 +13,13 @@ STATES =[
 PAYMENT_CHOICES = [
     ('S','Stripe'),
     ('P','Paypal')
+]
+
+SIZES = [
+    ('S', 'Small'),
+    ('M', 'Medium'),
+    ('L', 'Large'),
+    ('XL', 'Extra Large')
 ]
 class CheckoutForm(forms.Form):
 
@@ -46,3 +54,12 @@ class CheckoutForm(forms.Form):
     payment_option = forms.ChoiceField(
         widget = forms.Select(),
         choices = PAYMENT_CHOICES)
+
+
+class SizeForm(forms.ModelForm):
+
+    class Meta():
+        model = OrderItem
+        fields = [
+            'size'
+            ]
